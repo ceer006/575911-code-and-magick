@@ -35,9 +35,6 @@ var getWizardData = function () {
     eyesColor: EYES_COLOR[getRandom(0, EYES_COLOR.length)]};
 };
 
-for (var i = 0; i < AMOUNT_PLAYERS; i++) {
-  wizards[i] = getWizardData();
-}
 
 var renderWizard = function (wizard) {
   var wizardElement = similarWizardTemplate.cloneNode(true);
@@ -48,6 +45,10 @@ var renderWizard = function (wizard) {
 
   return wizardElement;
 };
+
+for (var i = 0; i < AMOUNT_PLAYERS; i++) {
+  wizards[i] = getWizardData();
+}
 
 userDialog.classList.remove('hidden');
 
