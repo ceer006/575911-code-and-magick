@@ -14,6 +14,11 @@ var COAT_COLOR = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)',
 
 var EYES_COLOR = ['black', 'red', 'blue', 'yellow', 'green'];
 
+var FIREBALL_COLOR = ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'];
+
+var ESC_KEYCODE = 27;
+var ENTER_KEYCODE = 13;
+
 var wizards = [];
 
 var userDialog = document.querySelector('.setup');
@@ -50,8 +55,6 @@ for (var i = 0; i < AMOUNT_PLAYERS; i++) {
   wizards[i] = getWizardData();
 }
 
-userDialog.classList.remove('hidden');
-
 var fragment = document.createDocumentFragment();
 for (i = 0; i < wizards.length; i++) {
   fragment.appendChild(renderWizard(wizards[i]));
@@ -59,3 +62,66 @@ for (i = 0; i < wizards.length; i++) {
 similarListElement.appendChild(fragment);
 
 userDialog.querySelector('.setup-similar').classList.remove('hidden');
+
+var setupOpen = document.querySelector('.setup-open');
+var setupClose = userDialog.querySelector('.setup-close');
+var setupUserName = userDialog.querySelector('.setup-user-name');
+var setupFireballWrap = userDialog.querySelector('.setup-fireball-wrap');
+var setupWizard = userDialog.querySelector('.setup-wizard-appearance');
+var setupColorEyes = setupWizard.querySelector('.wizard-eyes');
+
+var onPopupEscPress = function (evt) {
+  if (evt.keyCode === ESC_KEYCODE) {
+    closePopup();
+  }
+};
+
+var openPopup = function () {
+  userDialog.classList.remove('hidden');
+  document.addEventListener('keydown', onPopupEscPress);
+};
+
+var closePopup = function () {
+  userDialog.classList.add('hidden');
+  document.removeEventListener('keydown', onPopupEscPress);
+};
+
+var changeColorFireball = function () {
+  var fireballColor = FIREBALL_COLOR[getRandom(0, FIREBALL_COLOR.length)];
+  setupFireballWrap.style.backgroundColor = fireballColor;
+  setupFireballWrap.querySelector('input').value = fireballColor;
+};
+
+var changeColorEyes = function () {
+  var EyesColor = EYES_COLOR[getRandom(0, EYES_COLOR.length)];
+  setupColorEyes.style = 'fill:' + EyesColor;
+  setupWizard.querySelector('input[name=eyes-color]').value = EyesColor;
+};
+
+setupOpen.addEventListener('click', function () {
+  openPopup();
+});
+
+setupOpen.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === ENTER_KEYCODE) {
+    openPopup();
+  }
+});
+
+setupClose.addEventListener('click', function () {
+  closePopup();
+});
+
+setupClose.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === ENTER_KEYCODE) {
+    closePopup();
+  }
+});
+
+setupFireballWrap.addEventListener('click', function () {
+  changeColorFireball();
+});
+
+setupColorEyes.addEventListener('click', function () {
+  changeColorEyes();
+});
