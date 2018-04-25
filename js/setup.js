@@ -28,6 +28,16 @@ var similarListElement = userDialog.querySelector('.setup-similar-list');
 var similarWizardTemplate = document.querySelector('#similar-wizard-template')
     .content.querySelector('.setup-similar-item');
 
+var setupOpen = document.querySelector('.setup-open');
+
+var setupClose = userDialog.querySelector('.setup-close');
+
+var setupFireballWrap = userDialog.querySelector('.setup-fireball-wrap');
+
+var setupWizard = userDialog.querySelector('.setup-wizard-appearance');
+
+var setupColorEyes = setupWizard.querySelector('.wizard-eyes');
+
 var getRandom = function (min, max) {
   return Math.floor(Math.random() * (max - min) + min);
 };
@@ -39,7 +49,6 @@ var getWizardData = function () {
     coatColor: COAT_COLOR[getRandom(0, COAT_COLOR.length)],
     eyesColor: EYES_COLOR[getRandom(0, EYES_COLOR.length)]};
 };
-
 
 var renderWizard = function (wizard) {
   var wizardElement = similarWizardTemplate.cloneNode(true);
@@ -60,15 +69,6 @@ for (i = 0; i < wizards.length; i++) {
   fragment.appendChild(renderWizard(wizards[i]));
 }
 similarListElement.appendChild(fragment);
-
-userDialog.querySelector('.setup-similar').classList.remove('hidden');
-
-var setupOpen = document.querySelector('.setup-open');
-var setupClose = userDialog.querySelector('.setup-close');
-var setupUserName = userDialog.querySelector('.setup-user-name');
-var setupFireballWrap = userDialog.querySelector('.setup-fireball-wrap');
-var setupWizard = userDialog.querySelector('.setup-wizard-appearance');
-var setupColorEyes = setupWizard.querySelector('.wizard-eyes');
 
 var onPopupEscPress = function (evt) {
   if (evt.keyCode === ESC_KEYCODE) {
@@ -97,6 +97,8 @@ var changeColorEyes = function () {
   setupColorEyes.style = 'fill:' + EyesColor;
   setupWizard.querySelector('input[name=eyes-color]').value = EyesColor;
 };
+
+userDialog.querySelector('.setup-similar').classList.remove('hidden');
 
 setupOpen.addEventListener('click', function () {
   openPopup();
